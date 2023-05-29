@@ -1,0 +1,43 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": null,
+          "revision": "bc268c28fb170f494de9e9927c371b8342979ece",
+          "version": "5.7.1"
+        }
+      },
+      {
+        "package": "Kingfisher",
+        "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
+        "state": {
+          "branch": null,
+          "revision": "e8625b80c413457b13ea9be75d07f6e9f5830c19",
+          "version": "7.7.0"
+        }
+      },
+      {
+        "package": "SwiftUIPullToRefresh",
+        "repositoryURL": "https://github.com/globulus/swiftui-pull-to-refresh",
+        "state": {
+          "branch": null,
+          "revision": "1852a4eb7e7a12a768c64b25b1bd905993ced4eb",
+          "version": "1.1.9"
+        }
+      },
+      {
+        "package": "WrappingHStack",
+        "repositoryURL": "https://github.com/dkk/WrappingHStack",
+        "state": {
+          "branch": null,
+          "revision": "f31b8fdc57759c5aa5fc98c70746db5556e73300",
+          "version": "2.2.10"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
