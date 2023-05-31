@@ -59,7 +59,9 @@ class HomeViewModel:LoadableObject, ObservableObject {
                 }
                 self.currentPage = 1
             } catch {
-                self.state = .failed(error)
+                DispatchQueue.main.async {
+                    self.state = .failed(error)
+                }
             }
         }
     }
@@ -113,7 +115,9 @@ class HomeViewModel:LoadableObject, ObservableObject {
             }
             self.currentPage = 1
         } catch {
-            self.state = .failed(error)
+            DispatchQueue.main.async {
+                self.state = .failed(error)
+            }
         }
     }
 }

@@ -41,6 +41,8 @@
 		6C0EC7392A249F7D000BFAF6 /* SwiftUIPullToRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = 6C0EC7382A249F7D000BFAF6 /* SwiftUIPullToRefresh */; };
 		6C0EC73C2A249FB1000BFAF6 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6C0EC73B2A249FB1000BFAF6 /* Alamofire */; };
 		6C0EC7432A24AD94000BFAF6 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 6C0EC7422A24AD94000BFAF6 /* WrappingHStack */; };
+		6C0EC7452A273C3D000BFAF6 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EC7442A273C3D000BFAF6 /* SearchViewModel.swift */; };
+		6C0EC7472A273CAC000BFAF6 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EC7462A273CAC000BFAF6 /* SearchModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +77,8 @@
 		6C0EC7122A249D2E000BFAF6 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		6C0EC7132A249D2E000BFAF6 /* HomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
 		6C0EC7142A249D2E000BFAF6 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		6C0EC7442A273C3D000BFAF6 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		6C0EC7462A273CAC000BFAF6 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				6C0EC6F22A249D2D000BFAF6 /* SearchView.swift */,
+				6C0EC7442A273C3D000BFAF6 /* SearchViewModel.swift */,
+				6C0EC7462A273CAC000BFAF6 /* SearchModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -319,6 +325,7 @@
 				6C0EC6E62A249C76000BFAF6 /* ContentView.swift in Sources */,
 				6C0EC72F2A249D2E000BFAF6 /* HomeView.swift in Sources */,
 				6C0EC7182A249D2E000BFAF6 /* ZoomImageView.swift in Sources */,
+				6C0EC7472A273CAC000BFAF6 /* SearchModel.swift in Sources */,
 				6C0EC71B2A249D2E000BFAF6 /* Log.swift in Sources */,
 				6C0EC7192A249D2E000BFAF6 /* AsyncContentView.swift in Sources */,
 				6C0EC71C2A249D2E000BFAF6 /* View.swift in Sources */,
@@ -334,6 +341,7 @@
 				6C0EC7272A249D2E000BFAF6 /* Api.swift in Sources */,
 				6C0EC7222A249D2E000BFAF6 /* GroupModel.swift in Sources */,
 				6C0EC71E2A249D2E000BFAF6 /* Color.swift in Sources */,
+				6C0EC7452A273C3D000BFAF6 /* SearchViewModel.swift in Sources */,
 				6C0EC72C2A249D2E000BFAF6 /* HomeItem.swift in Sources */,
 				6C0EC7172A249D2E000BFAF6 /* Adaptation.swift in Sources */,
 				6C0EC6E42A249C76000BFAF6 /* shuorenApp.swift in Sources */,

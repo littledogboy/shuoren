@@ -16,5 +16,7 @@ let kHome = kServerDomain + "/home"
 let kDetail = kServerDomain + "/detail"
 let kMenu = kServerDomain + "/menuItems"
 let kGroup = kServerDomain + "/group"
+let kTags = kServerDomain + "/tags"
+let kTagPage = kServerDomain + "/tag"
 
 

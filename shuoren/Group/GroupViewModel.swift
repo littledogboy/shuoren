@@ -29,7 +29,9 @@ class GroupViewModel: ObservableObject, LoadableObject {
                     self.state = .loaded(menuData.sections)
                 }
             } catch  {
-                self.state = .failed(error)
+                DispatchQueue.main.async {
+                    self.state = .failed(error)
+                }
                 debugLog(object: "网络请求出错: \(error.localizedDescription)")
             }
         }

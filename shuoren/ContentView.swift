@@ -13,34 +13,34 @@ struct ContentView: View {
         UITabBar.appearance().backgroundColor = UIColor.white
       }
     
-    @State private var selection = 1
+    @State private var currentTab = 0
     
     var body: some View {
-        TabView {
+        TabView(selection: $currentTab) {
             HomeView()
                 .tabItem {
                     Label("首页", systemImage: "house")
                 }
-                .tag(1)
+                .tag(0)
             
             GroupView()
                 .tabItem {
                     Label("发现", systemImage: "globe.asia.australia")
                 }
-                .tag(2)
+                .tag(1)
             
             SearchView()
                 .tabItem {
                     Label("搜索", systemImage: "magnifyingglass")
                 }
-                .tag(3)
+                .tag(2)
 
             
             SettingView()
                 .tabItem {
                     Label("设置", systemImage: "gearshape")
                 }
-                .tag(4)
+                .tag(3)
         }
         .accentColor(.pink)
     }
