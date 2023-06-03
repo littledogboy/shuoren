@@ -12,11 +12,18 @@ import CoreAudio
 struct SearchView: View {
     @StateObject private var vm = SearchViewModel()
     @State var searchText: String = ""
+    @State private var isShowDetailView = false
     
     var body: some View {
         NavigationView {
             AsyncContentView(source: vm) { tags in
                 VStack {
+                    NavigationLink(isActive: $isShowDetailView) {
+                        HomeView(searchKey: searchText)
+                    } label: {
+                        EmptyView()
+                    }
+                    
                     ScrollView {
                         WrappingHStack(tags) { tag in
                             NavigationLink {
@@ -38,6 +45,11 @@ struct SearchView: View {
             .navigationBarTitle("搜索", displayMode: .inline)
         }
         .searchable(text: $searchText,placement: .navigationBarDrawer(displayMode: .always), prompt: "搜一些东西")
+        .onSubmit(of: .search) {
+            if !searchText.isEmpty {
+                self.isShowDetailView = true
+            }
+        }
     }
 }
 

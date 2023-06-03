@@ -12,14 +12,15 @@ import SwiftUIPullToRefresh
 struct HomeView: View {
     var menuItem : HomeItem?
     var tag: SearchTag?
+    private(set) var searchKey: String = ""
     @StateObject private var vm: HomeViewModel
     
     private var needAddNavigationStack: Bool {
-        return self.menuItem == nil && self.tag == nil
+        return menuItem == nil && tag == nil && searchKey.isEmpty
     }
     
     private var navigationTitle: String? {
-        return self.menuItem?.title ?? self.tag?.title
+        return menuItem?.title ?? tag?.title ?? searchKey
     }
     
     private var needHidenNavigationBar: Bool {
@@ -39,6 +40,12 @@ struct HomeView: View {
     init(tag: SearchTag) {
         self.tag = tag
         let desURL = kTagPage.addQueryItem(key: "href", value: tag.href)
+        self._vm = StateObject(wrappedValue: HomeViewModel(desURL: desURL))
+    }
+    
+    init(searchKey: String) {
+        self.searchKey = searchKey
+        let desURL = kSearch.addQueryItem(key: "q", value: searchKey)
         self._vm = StateObject(wrappedValue: HomeViewModel(desURL: desURL))
     }
     

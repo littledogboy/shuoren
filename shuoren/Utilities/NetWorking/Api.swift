@@ -18,5 +18,6 @@ let kMenu = kServerDomain + "/menuItems"
 let kGroup = kServerDomain + "/group"
 let kTags = kServerDomain + "/tags"
 let kTagPage = kServerDomain + "/tag"
+let kSearch = kServerDomain + "/search"
 
 
