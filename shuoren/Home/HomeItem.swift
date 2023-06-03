@@ -8,7 +8,7 @@
 import Foundation
 
 struct HomeData: Codable {
-    var recommends: [HomeItem]
+    var recommends: [HomeItem]?
     
     init() {
         recommends = []

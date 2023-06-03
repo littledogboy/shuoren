@@ -13,6 +13,7 @@ class HomeViewModel:LoadableObject, ObservableObject {
 
     @Published private(set) var state = LoadingState<[HomeItem]>.idle
     private var currentPage = 1
+    private var hasMore = true
     private var cancellable: AnyCancellable?
     
     init(desURL: String) {
@@ -55,9 +56,10 @@ class HomeViewModel:LoadableObject, ObservableObject {
                 
                 let decodeData = try JSONDecoder().decode(HomeData.self, from: data)
                 DispatchQueue.main.async {
-                    self.state = .loaded(decodeData.recommends)
+                    self.state = .loaded(decodeData.recommends ?? [])
                 }
                 self.currentPage = 1
+                self.hasMore = decodeData.recommends?.count ?? 0 > 0
             } catch {
                 DispatchQueue.main.async {
                     self.state = .failed(error)
@@ -67,6 +69,10 @@ class HomeViewModel:LoadableObject, ObservableObject {
     }
     
     func loadMore() {
+        guard self.hasMore else {
+            return
+        }
+        
         let nextPage = currentPage + 1
         
         var urlComp = URLComponents(string: desURL)
@@ -95,10 +101,17 @@ class HomeViewModel:LoadableObject, ObservableObject {
             .sink(receiveCompletion: {
                 print ("Received completion: \($0).")
             }, receiveValue: { homeData in
-                if case .loaded(let items) = self.state {
-                    let newArray: [HomeItem] = items + homeData.recommends
-                    self.state = .loaded(newArray)
-                    self.currentPage += 1
+                if let recommends = homeData.recommends {
+                    if case .loaded(let items) = self.state {
+                        let newArray: [HomeItem] = items + recommends
+                        DispatchQueue.main.async {
+                            self.state = .loaded(newArray)
+                        }
+                        self.currentPage += 1
+                        self.hasMore = true
+                    }
+                } else {
+                    self.hasMore = false
                 }
             })
     }
@@ -111,9 +124,10 @@ class HomeViewModel:LoadableObject, ObservableObject {
             let (data, _) = try await URLSession.shared.data(for:request)
             let decodeData = try JSONDecoder().decode(HomeData.self, from: data)
             DispatchQueue.main.async {
-                self.state = .loaded(decodeData.recommends)
+                self.state = .loaded(decodeData.recommends ?? [])
             }
             self.currentPage = 1
+            self.hasMore = decodeData.recommends?.count ?? 0 > 0
         } catch {
             DispatchQueue.main.async {
                 self.state = .failed(error)

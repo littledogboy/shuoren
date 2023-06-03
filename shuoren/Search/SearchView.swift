@@ -19,12 +19,16 @@ struct SearchView: View {
                 VStack {
                     ScrollView {
                         WrappingHStack(tags) { tag in
-                            let vSpacing = 3.0
-                            let hSpacing = 5.0
-                            Text("\(tag.title)")
-                                .foregroundColor(Color(hex: tag.color))
-                                .font(.system(size: Pixel(.cssFont,CGFloat(tag.fontSize))))
-                                .padding(EdgeInsets(top: vSpacing, leading: hSpacing, bottom: vSpacing, trailing: hSpacing))
+                            NavigationLink {
+                                HomeView(tag: tag)
+                            } label: {
+                                let vSpacing = 3.0
+                                let hSpacing = 5.0
+                                Text("\(tag.title)")
+                                    .foregroundColor(Color(hex: tag.color))
+                                    .font(.system(size: Pixel(.cssFont,CGFloat(tag.fontSize))))
+                                    .padding(EdgeInsets(top: vSpacing, leading: hSpacing, bottom: vSpacing, trailing: hSpacing))
+                            }
                         }
                         .padding()
                     }

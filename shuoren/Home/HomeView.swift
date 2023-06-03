@@ -11,7 +11,20 @@ import SwiftUIPullToRefresh
 
 struct HomeView: View {
     var menuItem : HomeItem?
+    var tag: SearchTag?
     @StateObject private var vm: HomeViewModel
+    
+    private var needAddNavigationStack: Bool {
+        return self.menuItem == nil && self.tag == nil
+    }
+    
+    private var navigationTitle: String? {
+        return self.menuItem?.title ?? self.tag?.title
+    }
+    
+    private var needHidenNavigationBar: Bool {
+        return needAddNavigationStack
+    }
     
     init() {
         self._vm = StateObject(wrappedValue: HomeViewModel(desURL: kHome))
@@ -23,8 +36,14 @@ struct HomeView: View {
         self._vm = StateObject(wrappedValue: HomeViewModel(desURL: desURL))
     }
     
+    init(tag: SearchTag) {
+        self.tag = tag
+        let desURL = kTagPage.addQueryItem(key: "href", value: tag.href)
+        self._vm = StateObject(wrappedValue: HomeViewModel(desURL: desURL))
+    }
+    
     var body: some View {
-        if self.menuItem == nil {
+        if needAddNavigationStack {
             NavigationView {
                 content
             }
@@ -70,9 +89,10 @@ struct HomeView: View {
                                  }
                              }
                          }
+                         .frame(minHeight: geom.size.height, alignment: .topLeading)
                          .padding(EdgeInsets(top: 8,
                                              leading: 0,
-                                             bottom: 0,
+                                             bottom: 8,
                                              trailing: 0))
                          .background(Color(hex: "#F0F0F0"))
                      }
@@ -81,8 +101,8 @@ struct HomeView: View {
                                          bottom: 0,
                                          trailing: 0))
                 }
-                .navigationBarHidden(menuItem == nil ? true : false)
-                .navigationBarTitle(menuItem?.title ?? "", displayMode: .inline)
+                .navigationBarHidden(needHidenNavigationBar)
+                .navigationBarTitle(navigationTitle ?? "", displayMode: .inline)
             }
     }
 }
