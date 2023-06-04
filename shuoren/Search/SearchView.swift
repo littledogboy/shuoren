@@ -11,15 +11,16 @@ import CoreAudio
 
 struct SearchView: View {
     @StateObject private var vm = SearchViewModel()
-    @State var searchText: String = ""
     @State private var isShowDetailView = false
+    @ObservedObject var searchKey = SearchKey()
     
     var body: some View {
+        
         NavigationView {
             AsyncContentView(source: vm) { tags in
                 VStack {
                     NavigationLink(isActive: $isShowDetailView) {
-                        HomeView(searchKey: searchText)
+                        HomeView(searchKey: searchKey)
                     } label: {
                         EmptyView()
                     }
@@ -44,9 +45,9 @@ struct SearchView: View {
             }
             .navigationBarTitle("搜索", displayMode: .inline)
         }
-        .searchable(text: $searchText,placement: .navigationBarDrawer(displayMode: .always), prompt: "搜一些东西")
+        .searchable(text: $searchKey.searchKey,placement: .navigationBarDrawer(displayMode: .always), prompt: "搜一些东西")
         .onSubmit(of: .search) {
-            if !searchText.isEmpty {
+            if !searchKey.searchKey.isEmpty {
                 self.isShowDetailView = true
             }
         }

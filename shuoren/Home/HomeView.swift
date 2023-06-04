@@ -12,11 +12,12 @@ import SwiftUIPullToRefresh
 struct HomeView: View {
     var menuItem : HomeItem?
     var tag: SearchTag?
-    private(set) var searchKey: String = ""
     @StateObject private var vm: HomeViewModel
+    @State var searchKey : String?
+    var obSearchKey: SearchKey?
     
     private var needAddNavigationStack: Bool {
-        return menuItem == nil && tag == nil && searchKey.isEmpty
+        return menuItem == nil && tag == nil && searchKey == nil
     }
     
     private var navigationTitle: String? {
@@ -27,8 +28,8 @@ struct HomeView: View {
         return needAddNavigationStack
     }
     
-    init() {
-        self._vm = StateObject(wrappedValue: HomeViewModel(desURL: kHome))
+    init(home: String) {
+        self._vm = StateObject(wrappedValue: HomeViewModel(desURL: home))
     }
         
     init(menuItem: HomeItem) {
@@ -43,13 +44,14 @@ struct HomeView: View {
         self._vm = StateObject(wrappedValue: HomeViewModel(desURL: desURL))
     }
     
-    init(searchKey: String) {
-        self.searchKey = searchKey
-        let desURL = kSearch.addQueryItem(key: "q", value: searchKey)
+    init(searchKey: SearchKey) {
+        self.obSearchKey = searchKey
+        let desURL = kSearch.addQueryItem(key: "q", value: searchKey.searchKey)
         self._vm = StateObject(wrappedValue: HomeViewModel(desURL: desURL))
     }
     
     var body: some View {
+        
         if needAddNavigationStack {
             NavigationView {
                 content
@@ -58,9 +60,20 @@ struct HomeView: View {
         } else {
             content
         }
+        
+        if case .idle = self.vm.state {
+            if let search = self.obSearchKey, search.searchKey.count > 0 {
+                Color.clear.onAppear {
+                    self.searchKey = search.searchKey
+                    let desURL = kSearch.addQueryItem(key: "q", value: search.searchKey)
+                    self.vm.desURL = desURL
+                }
+            }
+        }
     }
     
     var content: some View {
+        
         AsyncContentView(source: vm) { recommends in
                 GeometryReader { geom in
                     
@@ -116,6 +129,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(home: kHome)
     }
 }

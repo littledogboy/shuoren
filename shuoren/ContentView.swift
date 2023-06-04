@@ -17,7 +17,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $currentTab) {
-            HomeView()
+            HomeView(home: kHome)
                 .tabItem {
                     Label("首页", systemImage: "house")
                 }
