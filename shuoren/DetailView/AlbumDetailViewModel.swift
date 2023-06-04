@@ -7,19 +7,17 @@
 
 import SwiftUI
 
-class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate {
-    @Published private(set) var albumDetail: AlbumDetail = AlbumDetail()
-    @Published var isLoading = false
+class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, LoadableObject {
+    @Published private(set) var state: LoadingState<AlbumDetail> = .idle
+    var href: String
     var tapUrlString: String?
-
-    func loadData(with href: String?) {
-        self.isLoading = true
-
-        guard href != "" else {
-            debugLog(object: "链接为空")
-            self.isLoading = false
-            return
-        }
+    
+    init(href: String) {
+        self.href = href
+    }
+    
+    func load() {
+        self.state = .loading
         
         var urlComp = URLComponents(string: kDetail)
         let urlQueryItems = [URLQueryItem(name: "href", value: href)]
@@ -38,21 +36,26 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate {
     }
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        self.isLoading = false
-
         do {
             let modelObject = try JSONDecoder().decode(AlbumDetail.self, from: data)
             DispatchQueue.main.async {
-                self.albumDetail = modelObject
+                self.state = .loaded(modelObject)
             }
         } catch {
-            debugLog(object: "网络请求出错: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                self.state = .failed(error)
+            }
+            debugLog(object: "解析出错: \(error)")
+            debugLog(object: String(decoding: data, as: UTF8.self))
+            debugLog(object: dataTask.response)
         }
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        self.isLoading = false
         if let error = error {
+            DispatchQueue.main.async {
+                self.state = .failed(error)
+            }
             debugLog(object: "网络请求出错: \(error.localizedDescription)")
         }
     }
@@ -68,7 +71,7 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate {
             }
         } catch  {
             completionHandler(nil)
-            debugLog(object: "网络请求出错: \(error.localizedDescription)")
+            debugLog(object: "解析出错: \(error)")
         }
     }
     
@@ -83,7 +86,7 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate {
                     cache.removeCachedResponse(for: request)
                 }
             } catch  {
-                debugLog(object: "网络请求出错: \(error.localizedDescription)")
+                debugLog(object: "解析出错: \(error)")
             }
         }
     }

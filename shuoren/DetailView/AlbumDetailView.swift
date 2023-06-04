@@ -11,8 +11,7 @@ import Kingfisher
 
 struct AlbumDetailView: View {
     var homeItem: HomeItem?
-    
-    @StateObject var vm = AlbumDetailViewModel()
+    @StateObject var vm: AlbumDetailViewModel
     
     @State private var scale = 1.0
     @State private var lastScale = 1.0
@@ -21,67 +20,61 @@ struct AlbumDetailView: View {
     private let maxScale = 3.0
     
     @State private var isImagePresented = false
-        
-    var body: some View {
-        
-        GeometryReader { geometryreader in
-            List (self.vm.albumDetail.images!) { image in
-                // imageView
-                if let img = image.src {
-                    let url = URL(string: img)
-                    let modifier = AnyModifier { request in
-                        var r = request
-                        r.setValue(kReferer, forHTTPHeaderField: "referer")
-                        return r
-                    }
-                    
-                    let padding = 4.0
-                    let width = geometryreader.size.width - 2.0 * padding
-                    let ratio = CGFloat(image.width) / CGFloat(image.height)
-                    let height = width / ratio
-                                        
-                    KFImage.url(url)
-                        .requestModifier(modifier)
-                        .cacheOriginalImage()
-                        .fade(duration: 0.25)
-                        .onSuccess { result in
-                        }
-                        .resizable()
-                        .onTapGesture {
-                            self.vm.tapUrlString = image.src
-                            isImagePresented.toggle()
-                        }
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: width, height: height)
-                        .clipped()
-                        .listRowSeparatorTint(.white)
-                        .listRowInsets(EdgeInsets(top:4, leading: 4, bottom: 4, trailing: 4))
-                        
-                }
-            }
-            .overlay(loadingOverlay)
-            .scaleEffect(scale)
-            .gesture(makeMagnificationGesture(size: geometryreader.size))
-            .fullScreenCover(isPresented: $isImagePresented) {
-                let image = ImageCache.default.retrieveImageInMemoryCache(forKey: self.vm.tapUrlString!)
-                if let image = image {
-                    ZoomImageView(image: Image(kfImage: image))
-                }
-            }
-        }
-        .listStyle(.plain)
-        .onAppear {
-            self.vm.loadData(with: self.homeItem!.href)
-        }
-        .navigationBarTitle(self.homeItem!.title!, displayMode: .inline)
+    
+    init(homeItem: HomeItem?) {
+        self.homeItem = homeItem
+        let href = homeItem?.href ?? ""
+        self._vm = StateObject(wrappedValue: AlbumDetailViewModel(href: href))
     }
     
-    @ViewBuilder private var loadingOverlay: some View {
-        if vm.isLoading {
-            ZStack {
-                Color(white: 0, opacity: 0.3)
-                ProgressView().tint(.white)
+    var body: some View {
+        AsyncContentView(source: self.vm) { albumDetail in
+            GeometryReader { geometryreader in
+                List (albumDetail.images ?? []) { image in
+                    // imageView
+                    if let img = image.src {
+                        let url = URL(string: img)
+                        let modifier = AnyModifier { request in
+                            var r = request
+                            r.setValue(kReferer, forHTTPHeaderField: "referer")
+                            return r
+                        }
+                        
+                        let padding = 4.0
+                        let width = geometryreader.size.width - 2.0 * padding
+                        let ratio = CGFloat(image.width) / CGFloat(image.height)
+                        let height = width / ratio
+                        
+                        KFImage.url(url)
+                            .requestModifier(modifier)
+                            .cacheOriginalImage()
+                            .fade(duration: 0.25)
+                            .onSuccess { result in
+                            }
+                            .resizable()
+                            .onTapGesture {
+                                self.vm.tapUrlString = image.src
+                                isImagePresented.toggle()
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: width, height: height)
+                            .clipped()
+                            .listRowSeparatorTint(.white)
+                            .listRowInsets(EdgeInsets(top:4, leading: 4, bottom: 4, trailing: 4))
+                        
+                    }
+                }
+                .scaleEffect(scale)
+                .gesture(makeMagnificationGesture(size: geometryreader.size))
+                .fullScreenCover(isPresented: $isImagePresented) {
+                    let image = ImageCache.default.retrieveImageInMemoryCache(forKey: self.vm.tapUrlString!)
+                    if let image = image {
+                        ZoomImageView(image: Image(kfImage: image))
+                    }
+                }
             }
+            .listStyle(.plain)
+            .navigationBarTitle(self.homeItem!.title ?? "", displayMode: .inline)
         }
     }
     
@@ -106,6 +99,6 @@ struct AlbumDetailView: View {
 
 struct AlbumDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        AlbumDetailView()
+        AlbumDetailView(homeItem: nil)
     }
 }
