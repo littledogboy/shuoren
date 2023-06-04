@@ -11,6 +11,7 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, 
     @Published private(set) var state: LoadingState<AlbumDetail> = .idle
     var href: String
     var tapUrlString: String?
+    var receivedData: Data = Data()
     
     init(href: String) {
         self.href = href
@@ -32,23 +33,12 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, 
     
     // MARK: URLSessionDataDelegate
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        self.receivedData = Data()
         return completionHandler(.allow)
     }
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        do {
-            let modelObject = try JSONDecoder().decode(AlbumDetail.self, from: data)
-            DispatchQueue.main.async {
-                self.state = .loaded(modelObject)
-            }
-        } catch {
-            DispatchQueue.main.async {
-                self.state = .failed(error)
-            }
-            debugLog(object: "解析出错: \(error)")
-            debugLog(object: String(decoding: data, as: UTF8.self))
-            debugLog(object: dataTask.response)
-        }
+        self.receivedData.append(data)
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
@@ -57,6 +47,20 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, 
                 self.state = .failed(error)
             }
             debugLog(object: "网络请求出错: \(error.localizedDescription)")
+        } else {
+            do {
+                
+                let modelObject = try JSONDecoder().decode(AlbumDetail.self, from: self.receivedData)
+                DispatchQueue.main.async {
+                    self.state = .loaded(modelObject)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.state = .failed(error)
+                }
+                debugLog(object: "解析出错: \(error)")
+                debugLog(object: String(decoding: self.receivedData, as: UTF8.self))
+            }
         }
     }
     
