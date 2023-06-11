@@ -18,7 +18,8 @@ struct HomeCell: View {
             ZStack(alignment: .bottomTrailing) {
                 // imageView
                 if let img = item?.img {
-                    let url = URL(string: img)
+                    let urlString = img.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                    let url = URL(string: urlString!)
                     let modifier = AnyModifier { request in
                         var r = request
                         r.setValue(kReferer, forHTTPHeaderField: "referer")
@@ -39,7 +40,7 @@ struct HomeCell: View {
                 let leadPadding = 3.0
                 let trailingPadding = 1.0
                 
-                if let model = item?.model {
+                if let model = item?.model, !model.isEmpty {
                     Text(model)
                         .foregroundColor(.white)
                         .font(.system(size: 12))
@@ -70,7 +71,7 @@ struct HomeCell: View {
                     }
                     
                     // line & time
-                    if let time = item?.time {
+                    if let time = item?.time, !time.isEmpty {
                         let linePadding = Pixel(.mobile, 6)
                         Divider()
                             .padding(EdgeInsets(top: 0,

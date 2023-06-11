@@ -33,7 +33,8 @@ struct AlbumDetailView: View {
                 List (albumDetail.images ?? []) { image in
                     // imageView
                     if let img = image.src {
-                        let url = URL(string: img)
+                        let urlString = img.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                        let url = URL(string: urlString!)
                         let modifier = AnyModifier { request in
                             var r = request
                             r.setValue(kReferer, forHTTPHeaderField: "referer")
