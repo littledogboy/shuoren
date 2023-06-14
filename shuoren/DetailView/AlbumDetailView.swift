@@ -54,7 +54,7 @@ struct AlbumDetailView: View {
                             }
                             .resizable()
                             .onTapGesture {
-                                self.vm.tapUrlString = image.src
+                                self.vm.tapUrlString = urlString
                                 isImagePresented.toggle()
                             }
                             .aspectRatio(contentMode: .fill)
