@@ -10,7 +10,7 @@ import Kingfisher
 
 
 struct AlbumDetailView: View {
-    var homeItem: HomeItem?
+    var homeItem: HomeItem
     @StateObject var vm: AlbumDetailViewModel
     
     @State private var scale = 1.0
@@ -21,9 +21,9 @@ struct AlbumDetailView: View {
     
     @State private var isImagePresented = false
     
-    init(homeItem: HomeItem?) {
+    init(homeItem: HomeItem) {
         self.homeItem = homeItem
-        self._vm = StateObject(wrappedValue: AlbumDetailViewModel(item: homeItem!))
+        self._vm = StateObject(wrappedValue: AlbumDetailViewModel(item: homeItem))
     }
     
     var body: some View {
@@ -74,7 +74,7 @@ struct AlbumDetailView: View {
                 }
             }
             .listStyle(.plain)
-            .navigationBarTitle(self.homeItem!.title ?? "", displayMode: .inline)
+            .navigationBarTitle(self.homeItem.title ?? "", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
@@ -82,12 +82,15 @@ struct AlbumDetailView: View {
                         if vm.item.isFavorite {
                             do {
                                 try                             CoreDataManager.shared.saveNewItem(item: vm.item)
-
                             } catch {
                                 debugLog(object: "存储失败 \(error)")
                             }
                         } else {
-                            
+                            do {
+                                try CoreDataManager.shared.deleteItem(item: vm.item)
+                            } catch {
+                                debugLog(object: "删除失败 \(error)")
+                            }
                         }
                     } label: {
                         let isFavorite = vm.item.isFavorite
@@ -115,10 +118,3 @@ struct AlbumDetailView: View {
     }
 }
 
-
-
-struct AlbumDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        AlbumDetailView(homeItem: nil)
-    }
-}

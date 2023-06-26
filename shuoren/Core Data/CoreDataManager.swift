@@ -33,6 +33,9 @@ class CoreDataManager {
     }
     
     func saveNewItem(item: HomeItem) throws {
+        guard try contains(item: item) == nil else {
+            return
+        }
         let itemEntity = ItemEntity(context: viewContext)
         itemEntity.id = item.id
         itemEntity.href = item.href
@@ -45,8 +48,21 @@ class CoreDataManager {
         try viewContext.save()
     }
     
-    func deleteItem(item: ItemEntity) throws {
+    func deleteItem(item: HomeItem) throws {
+        guard let itemEntity = try contains(item: item) else {
+            return
+        }
         
+        viewContext.delete(itemEntity)
+        try viewContext.save()
+    }
+    
+    func contains(item: HomeItem) throws -> ItemEntity? {
+        let allItems = try getAllItems()
+        return allItems.first { entity in
+            return entity.id == item.id ||
+                entity.title == item.title
+        }
     }
 }
 
