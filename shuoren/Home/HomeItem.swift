@@ -16,12 +16,13 @@ struct HomeData: Codable {
 }
 
 struct HomeItem: Codable, Identifiable, Hashable {
-    let id = UUID()
+    var id = UUID()
     var href: String?
     var img: String?
     var model: String?
     var title: String?
     var time: String?
+    var isFavorite: Bool = false
     
     enum CodingKeys: CodingKey {
         case href
@@ -29,5 +30,17 @@ struct HomeItem: Codable, Identifiable, Hashable {
         case model
         case title
         case time
+    }
+}
+
+extension HomeItem {
+    init(entity: ItemEntity) {
+        self.id = entity.id ?? UUID()
+        self.href = entity.href
+        self.img = entity.img
+        self.model = entity.model
+        self.title = entity.title
+        self.time = entity.time
+        self.isFavorite = entity.isFavorite
     }
 }

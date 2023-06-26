@@ -23,8 +23,7 @@ struct AlbumDetailView: View {
     
     init(homeItem: HomeItem?) {
         self.homeItem = homeItem
-        let href = homeItem?.href ?? ""
-        self._vm = StateObject(wrappedValue: AlbumDetailViewModel(href: href))
+        self._vm = StateObject(wrappedValue: AlbumDetailViewModel(item: homeItem!))
     }
     
     var body: some View {
@@ -76,6 +75,26 @@ struct AlbumDetailView: View {
             }
             .listStyle(.plain)
             .navigationBarTitle(self.homeItem!.title ?? "", displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        vm.item.isFavorite.toggle()
+                        if vm.item.isFavorite {
+                            do {
+                                try                             CoreDataManager.shared.saveNewItem(item: vm.item)
+
+                            } catch {
+                                debugLog(object: "存储失败 \(error)")
+                            }
+                        } else {
+                            
+                        }
+                    } label: {
+                        let isFavorite = vm.item.isFavorite
+                        Image(systemName: isFavorite ? "heart.fill" : "heart")
+                    }
+                }
+            }
         }
     }
     

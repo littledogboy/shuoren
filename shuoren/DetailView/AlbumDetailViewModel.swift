@@ -9,19 +9,19 @@ import SwiftUI
 
 class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, LoadableObject {
     @Published private(set) var state: LoadingState<AlbumDetail> = .idle
-    var href: String
+    @Published var item: HomeItem
     var tapUrlString: String?
     var receivedData: Data = Data()
     
-    init(href: String) {
-        self.href = href
+    init(item: HomeItem) {
+        self.item = item
     }
     
     func load() {
         self.state = .loading
         
         var urlComp = URLComponents(string: kDetail)
-        let urlQueryItems = [URLQueryItem(name: "href", value: href)]
+        let urlQueryItems = [URLQueryItem(name: "href", value: item.href)]
         urlComp?.queryItems = urlQueryItems
         let url = urlComp?.url
         let request = URLRequest(url: url!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)

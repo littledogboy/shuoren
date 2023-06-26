@@ -12,7 +12,7 @@ import SwiftUI
 struct shuorenApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environment(\.managedObjectContext, CoreDataManager.shared.persistentContainer.viewContext)
         }
     }
 }

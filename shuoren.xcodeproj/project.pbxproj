@@ -43,7 +43,10 @@
 		6C0EC7432A24AD94000BFAF6 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 6C0EC7422A24AD94000BFAF6 /* WrappingHStack */; };
 		6C0EC7452A273C3D000BFAF6 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EC7442A273C3D000BFAF6 /* SearchViewModel.swift */; };
 		6C0EC7472A273CAC000BFAF6 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0EC7462A273CAC000BFAF6 /* SearchModel.swift */; };
+		6C1BB5072A49833100B132D0 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1BB5062A49833100B132D0 /* SettingViewModel.swift */; };
 		6C4F32F82A2BCF04006C3F08 /* SearchKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4F32F72A2BCF04006C3F08 /* SearchKey.swift */; };
+		6C77B0132A46E19B0070067F /* shuoren.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6C77B0112A46E19B0070067F /* shuoren.xcdatamodeld */; };
+		6C77B0352A487EA10070067F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77B0342A487EA10070067F /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,8 +83,11 @@
 		6C0EC7142A249D2E000BFAF6 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6C0EC7442A273C3D000BFAF6 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		6C0EC7462A273CAC000BFAF6 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
+		6C1BB5062A49833100B132D0 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		6C4F32F62A2BB6B2006C3F08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6C4F32F72A2BCF04006C3F08 /* SearchKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKey.swift; sourceTree = "<group>"; };
+		6C77B0122A46E19B0070067F /* shuoren.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = shuoren.xcdatamodel; sourceTree = "<group>"; };
+		6C77B0342A487EA10070067F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +133,7 @@
 				6C0EC6F12A249D2D000BFAF6 /* Search */,
 				6C0EC7302A249D43000BFAF6 /* SettingView */,
 				6C0EC70B2A249D2E000BFAF6 /* DetailView */,
+				6C77B0142A4704F80070067F /* Core Data */,
 				6C0EC6E72A249C78000BFAF6 /* Assets.xcassets */,
 				6C0EC6E92A249C78000BFAF6 /* Preview Content */,
 			);
@@ -240,8 +247,18 @@
 			isa = PBXGroup;
 			children = (
 				6C0EC6F32A249D2D000BFAF6 /* SettingView.swift */,
+				6C1BB5062A49833100B132D0 /* SettingViewModel.swift */,
 			);
 			path = SettingView;
+			sourceTree = "<group>";
+		};
+		6C77B0142A4704F80070067F /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				6C77B0112A46E19B0070067F /* shuoren.xcdatamodeld */,
+				6C77B0342A487EA10070067F /* CoreDataManager.swift */,
+			);
+			path = "Core Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,11 +360,14 @@
 				6C0EC7242A249D2E000BFAF6 /* FolderView.swift in Sources */,
 				6C0EC71F2A249D2E000BFAF6 /* URLCache.swift in Sources */,
 				6C0EC7152A249D2E000BFAF6 /* SearchView.swift in Sources */,
+				6C77B0132A46E19B0070067F /* shuoren.xcdatamodeld in Sources */,
 				6C0EC7272A249D2E000BFAF6 /* Api.swift in Sources */,
 				6C4F32F82A2BCF04006C3F08 /* SearchKey.swift in Sources */,
 				6C0EC7222A249D2E000BFAF6 /* GroupModel.swift in Sources */,
 				6C0EC71E2A249D2E000BFAF6 /* Color.swift in Sources */,
+				6C77B0352A487EA10070067F /* CoreDataManager.swift in Sources */,
 				6C0EC7452A273C3D000BFAF6 /* SearchViewModel.swift in Sources */,
+				6C1BB5072A49833100B132D0 /* SettingViewModel.swift in Sources */,
 				6C0EC72C2A249D2E000BFAF6 /* HomeItem.swift in Sources */,
 				6C0EC7172A249D2E000BFAF6 /* Adaptation.swift in Sources */,
 				6C0EC6E42A249C76000BFAF6 /* shuorenApp.swift in Sources */,
@@ -620,6 +640,19 @@
 			productName = WrappingHStack;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		6C77B0112A46E19B0070067F /* shuoren.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6C77B0122A46E19B0070067F /* shuoren.xcdatamodel */,
+			);
+			currentVersion = 6C77B0122A46E19B0070067F /* shuoren.xcdatamodel */;
+			path = shuoren.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6C0EC6D82A249C76000BFAF6 /* Project object */;
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-let kServerDomain = "http://192.168.0.3:8080"
+let kServerDomain = "http://192.168.0.2:8080"
 //let kServerDomain = "http://localhost:8080"
 let kReferer = "https://meirentu.cc"
 
