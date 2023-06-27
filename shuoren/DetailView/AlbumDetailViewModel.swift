@@ -94,4 +94,16 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, 
             }
         }
     }
+    
+    func checkItem() {
+        do {
+            if (try CoreDataManager.shared.contains(item: self.item) != nil) {
+                self.item.isFavorite = true
+            } else {
+                self.item.isFavorite = false
+            }
+        } catch {
+            debugLog(object: "检查出错 \(error)")
+        }
+    }
 }

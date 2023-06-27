@@ -88,6 +88,7 @@ struct AlbumDetailView: View {
                         } else {
                             do {
                                 try CoreDataManager.shared.deleteItem(item: vm.item)
+                                vm.item.isFavorite = false
                             } catch {
                                 debugLog(object: "删除失败 \(error)")
                             }
@@ -98,6 +99,9 @@ struct AlbumDetailView: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            vm.checkItem()
         }
     }
     
