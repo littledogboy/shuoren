@@ -25,7 +25,7 @@ struct HomeCell: View {
                         r.setValue(kReferer, forHTTPHeaderField: "referer")
                         return r
                     }
-                    
+                                        
                     KFImage.url(url)
                         .requestModifier(modifier)
                         .cacheOriginalImage()
