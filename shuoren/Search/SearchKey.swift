@@ -9,5 +9,5 @@
 import Foundation
 
 class SearchKey: ObservableObject {
-    var searchKey: String = ""
+    @Published var searchKey: String = ""
 }

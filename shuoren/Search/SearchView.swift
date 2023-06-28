@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import WrappingHStack
 import CoreAudio
 
 struct SearchView: View {
@@ -25,30 +24,24 @@ struct SearchView: View {
                         EmptyView()
                     }
                     
-                    ScrollView {
-                        WrappingHStack(tags) { tag in
-                            NavigationLink {
-                                HomeView(tag: tag)
-                            } label: {
-                                let vSpacing = 3.0
-                                let hSpacing = 5.0
-                                Text("\(tag.title)")
-                                    .foregroundColor(Color(hex: tag.color))
-                                    .font(.system(size: Pixel(.cssFont,CGFloat(tag.fontSize))))
-                                    .padding(EdgeInsets(top: vSpacing, leading: hSpacing, bottom: vSpacing, trailing: hSpacing))
-                            }
-                        }
-                        .padding()
-                    }
-                    .background(Color(hex: "F0F0F0"))
+                    SearchTagsView(tags: tags)
                 }
             }
             .navigationBarTitle("搜索", displayMode: .inline)
         }
-        .searchable(text: $searchKey.searchKey,placement: .navigationBarDrawer(displayMode: .always), prompt: "搜一些东西")
+        .searchable(text: $searchKey.searchKey,placement: .navigationBarDrawer(displayMode: .always), prompt: "搜一些东西", suggestions: {
+            if searchKey.searchKey.isEmpty {
+                Text("搜索历史:")
+                ForEach(vm.history, id:\.self) { key in
+                    Text(key)
+                        .searchCompletion(key)
+                }
+            }
+        })
         .onSubmit(of: .search) {
             if !searchKey.searchKey.isEmpty {
                 self.isShowDetailView = true
+                self.vm.addHistory(searchKey: searchKey.searchKey)
             }
         }
     }
