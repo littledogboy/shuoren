@@ -30,4 +30,15 @@ class SettingViewModel: LoadableObject, ObservableObject {
         }
     }
     
+    /*
+     ImageCache.default.calculateDiskStorageSize { result in
+         switch result {
+         case .success(let size):
+             print("Disk cache size: \(Double(size) / 1024 / 1024) MB")
+         case .failure(let error):
+             print(error)
+         }
+     }
+     */
+    
 }

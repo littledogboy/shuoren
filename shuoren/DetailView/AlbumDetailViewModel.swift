@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, LoadableObject {
     @Published private(set) var state: LoadingState<AlbumDetail> = .idle
     @Published var item: HomeItem
+    @Published var tappedImage: Image?
     var tapUrlString: String?
     var receivedData: Data = Data()
     
@@ -104,6 +106,24 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, 
             }
         } catch {
             debugLog(object: "检查出错 \(error)")
+        }
+    }
+    
+    func getImageWithURLString(url: String?) {
+        if let url = url  {
+            let cache = ImageCache.default
+            cache.retrieveImage(forKey: url) { result in
+                switch result {
+                case .success(let value):
+                    if let image = value.image {
+                        self.tappedImage = Image(kfImage:image)
+                    }
+                    
+                case .failure(let error):
+                    self.tappedImage = nil
+                    debugLog(object: error)
+                }
+            }
         }
     }
 }

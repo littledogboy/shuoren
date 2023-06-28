@@ -54,7 +54,10 @@ struct AlbumDetailView: View {
                             .resizable()
                             .onTapGesture {
                                 self.vm.tapUrlString = urlString
-                                isImagePresented.toggle()
+                                self.vm.getImageWithURLString(url: urlString)
+                                if self.vm.tappedImage != nil {
+                                    isImagePresented = true
+                                }
                             }
                             .aspectRatio(contentMode: .fill)
                             .frame(width: width, height: height)
@@ -67,10 +70,7 @@ struct AlbumDetailView: View {
                 .scaleEffect(scale)
                 .gesture(makeMagnificationGesture(size: geometryreader.size))
                 .fullScreenCover(isPresented: $isImagePresented) {
-                    let image = ImageCache.default.retrieveImageInMemoryCache(forKey: self.vm.tapUrlString!)
-                    if let image = image {
-                        ZoomImageView(image: Image(kfImage: image))
-                    }
+                    ZoomImageView(image: self.vm.tappedImage!)
                 }
             }
             .listStyle(.plain)
