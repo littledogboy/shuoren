@@ -25,20 +25,22 @@ struct HomeCell: View {
                         r.setValue(kReferer, forHTTPHeaderField: "referer")
                         return r
                     }
-                    let radio = 2.0 / 3.0
+                    
                     KFImage.url(url)
                         .requestModifier(modifier)
                         .cacheOriginalImage()
                         .fade(duration: 0.25)
                         .cancelOnDisappear(true)
                         .resizable()
-                        .aspectRatio(radio, contentMode: .fit)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .clipped()
                 }
                 
                 // model
                 let radius = 10.0
                 let leadPadding = 3.0
-                let trailingPadding = 1.0
+                let trailingPadding = 2.0
                 
                 if let model = item?.model, !model.isEmpty {
                     Text(model)
