@@ -7,38 +7,21 @@
 //
 
 import Foundation
+import Kingfisher
 
-class SettingViewModel: LoadableObject, ObservableObject {
-    @Published private(set) var state: LoadingState<[HomeItem]> = .idle
-    let coreDM: CoreDataManager
+class SettingViewModel: ObservableObject {
+    @Published var imageCache: String = ""
     
-    init(coreDM: CoreDataManager) {
-        self.coreDM = coreDM
-    }
-    
-    func load() {
-        getFavoriteItems()
-    }
-    
-    func getFavoriteItems() {
-        do {
-            let favoriteItemEntities =  try self.coreDM.getAllItems()
-            let items = favoriteItemEntities.map { HomeItem(entity: $0) }
-            self.state = .loaded(items)
-        } catch {
-            debugLog(object: "获取 FavoriteItems 出错 \(error)")
+    func getImageCache() {
+        ImageCache.default.calculateDiskStorageSize { result in
+            switch result {
+            case .success(let size):
+                let imageCache = Double(size) / 1024 / 1024
+                self.imageCache = String(format: "%.2f MB", imageCache)
+            case .failure(let error):
+                self.imageCache = "--M"
+                debugLog(object: "获取图片缓存出错 \(error)")
+            }
         }
     }
-    
-    /*
-     ImageCache.default.calculateDiskStorageSize { result in
-         switch result {
-         case .success(let size):
-             print("Disk cache size: \(Double(size) / 1024 / 1024) MB")
-         case .failure(let error):
-             print(error)
-         }
-     }
-     */
-    
 }
