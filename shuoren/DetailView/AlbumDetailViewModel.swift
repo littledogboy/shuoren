@@ -146,7 +146,8 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, 
         }
         
         items.images?.compactMap({ $0.src }).forEach({ urlString in
-            getImageWithURLString(url: urlString) { image in
+            let encodingString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            getImageWithURLString(url: encodingString) { image in
                 if let image = image {
                     self.shareImages.append(image)
                 }
