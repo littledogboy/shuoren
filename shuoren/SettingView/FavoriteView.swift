@@ -57,6 +57,7 @@ struct FavoriteView: View {
             }
         }
         .navigationTitle(Text("收藏"))
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             self.vm.load()
         }

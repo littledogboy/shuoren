@@ -22,6 +22,16 @@ enum LoadingState<Value>: Equatable {
     case loading
     case failed(Error)
     case loaded(Value)
+    
+    
+    var value: Value? {
+        switch self {
+        case .idle: return nil
+        case .loading: return nil
+        case .loaded(let value): return value
+        case .failed(_): return nil
+        }
+    }
 }
 
 protocol LoadableObject: ObservableObject {

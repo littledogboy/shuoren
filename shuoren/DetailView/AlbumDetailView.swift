@@ -12,6 +12,7 @@ import Kingfisher
 struct AlbumDetailView: View {
     var homeItem: HomeItem
     @StateObject var vm: AlbumDetailViewModel
+    @State var shareSheet: Bool = false
     
     @State private var scale = 1.0
     @State private var lastScale = 1.0
@@ -54,7 +55,7 @@ struct AlbumDetailView: View {
                             .resizable()
                             .onTapGesture {
                                 self.vm.tapUrlString = urlString
-                                self.vm.getImageWithURLString(url: urlString)
+                                self.vm.getTappedImageWithURLString(url: self.vm.tapUrlString)
                                 if self.vm.tappedImage != nil {
                                     isImagePresented = true
                                 }
@@ -64,7 +65,32 @@ struct AlbumDetailView: View {
                             .clipped()
                             .listRowSeparatorTint(.white)
                             .listRowInsets(EdgeInsets(top:4, leading: 4, bottom: 4, trailing: 4))
-                        
+                    }
+                    
+                    if !albumDetail.images!.isEmpty && image == albumDetail.images!.last {
+                        Button {
+                            vm.getShareImages()
+                            if !vm.shareImages.isEmpty {
+                                shareSheet = true
+                            }
+                        } label: {
+                            Label(title: {
+                                Text("分享")
+                                .foregroundColor(.blue)
+                                .font(.system(size:24))
+                                }, icon: {
+                                    Image(systemName: "link")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(.blue)
+                                    .aspectRatio(contentMode: .fit)
+                                })
+                                .padding(.horizontal)
+                                .padding(.vertical)
+                                .background(Color(.tertiarySystemFill))
+                                .cornerRadius(5)
+                        }
+                        .listRowSeparatorTint(.white)
                     }
                 }
                 .scaleEffect(scale)
@@ -99,6 +125,9 @@ struct AlbumDetailView: View {
                     }
                 }
             }
+            .sheet(isPresented: $shareSheet) {
+                ShareSheetView(activityItems: vm.shareImages)
+            }
         }
         .onAppear {
             vm.checkItem()
@@ -119,6 +148,27 @@ struct AlbumDetailView: View {
                 }
                 lastScale = 1.0
             }
+    }
+}
+
+struct ShareSheetView: UIViewControllerRepresentable {
+    typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
+    let activityItems: [UIImage]
+    let applicationActivities: [UIActivity]? = nil
+    let excludedActivityTypes: [UIActivity.ActivityType]? = nil
+    let callback: Callback? = nil
+    
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(
+            activityItems: activityItems,
+            applicationActivities: applicationActivities)
+        controller.excludedActivityTypes = excludedActivityTypes
+        controller.completionWithItemsHandler = callback
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
+        // nothing to do here
     }
 }
 

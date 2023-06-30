@@ -50,6 +50,7 @@
 		6CC76BCC2A4C31DF0089F8CD /* SearchTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC76BCB2A4C31DE0089F8CD /* SearchTagsView.swift */; };
 		6CC76BCE2A4DA3760089F8CD /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC76BCD2A4DA3760089F8CD /* FavoriteView.swift */; };
 		6CC76BD02A4DA3A30089F8CD /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC76BCF2A4DA3A30089F8CD /* FavoriteViewModel.swift */; };
+		6CCA3F2F2A4EFCA400E94737 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCA3F2E2A4EFCA300E94737 /* UIImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		6CC76BCB2A4C31DE0089F8CD /* SearchTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagsView.swift; sourceTree = "<group>"; };
 		6CC76BCD2A4DA3760089F8CD /* FavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		6CC76BCF2A4DA3A30089F8CD /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
+		6CCA3F2E2A4EFCA300E94737 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +206,7 @@
 				6C0EC6FF2A249D2D000BFAF6 /* Color.swift */,
 				6C0EC7002A249D2D000BFAF6 /* URLCache.swift */,
 				6C0EC7012A249D2D000BFAF6 /* Image.swift */,
+				6CCA3F2E2A4EFCA300E94737 /* UIImage.swift */,
 			);
 			path = Extern;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				6C0EC72D2A249D2E000BFAF6 /* HomeViewModel.swift in Sources */,
 				6C0EC71D2A249D2E000BFAF6 /* String.swift in Sources */,
 				6C0EC7282A249D2E000BFAF6 /* AlbumDetailView.swift in Sources */,
+				6CCA3F2F2A4EFCA400E94737 /* UIImage.swift in Sources */,
 				6C0EC7252A249D2E000BFAF6 /* GroupView.swift in Sources */,
 				6C0EC7212A249D2E000BFAF6 /* GroupViewModel.swift in Sources */,
 			);
@@ -524,6 +528,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = shuoren/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "硕人";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -554,6 +560,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = shuoren/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "硕人";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

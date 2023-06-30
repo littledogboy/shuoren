@@ -12,6 +12,7 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, 
     @Published private(set) var state: LoadingState<AlbumDetail> = .idle
     @Published var item: HomeItem
     @Published var tappedImage: Image?
+    @Published var shareImages: [UIImage] = []
     var tapUrlString: String?
     var receivedData: Data = Data()
     
@@ -109,21 +110,47 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, 
         }
     }
     
-    func getImageWithURLString(url: String?) {
+    func getTappedImageWithURLString(url: String?) {
+        getImageWithURLString(url: url) { image in
+            if let image = image {
+                self.tappedImage = Image(kfImage:image)
+            }
+        }
+    }
+    
+    func getImageWithURLString(url: String?, completion: @escaping (UIImage?) -> ()) {
         if let url = url  {
             let cache = ImageCache.default
             cache.retrieveImage(forKey: url) { result in
                 switch result {
                 case .success(let value):
                     if let image = value.image {
-                        self.tappedImage = Image(kfImage:image)
+                        completion(image)
                     }
                     
                 case .failure(let error):
-                    self.tappedImage = nil
+                    completion(nil)
                     debugLog(object: error)
                 }
             }
         }
+    }
+    
+    func getShareImages() {
+        guard case .loaded(let items) = self.state else {
+            return
+        }
+        
+        guard shareImages.isEmpty else {
+            return
+        }
+        
+        items.images?.compactMap({ $0.src }).forEach({ urlString in
+            getImageWithURLString(url: urlString) { image in
+                if let image = image {
+                    self.shareImages.append(image)
+                }
+            }
+        })
     }
 }
