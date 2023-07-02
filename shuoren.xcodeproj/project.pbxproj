@@ -47,6 +47,8 @@
 		6C4F32F82A2BCF04006C3F08 /* SearchKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4F32F72A2BCF04006C3F08 /* SearchKey.swift */; };
 		6C77B0132A46E19B0070067F /* shuoren.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6C77B0112A46E19B0070067F /* shuoren.xcdatamodeld */; };
 		6C77B0352A487EA10070067F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77B0342A487EA10070067F /* CoreDataManager.swift */; };
+		6C7E1DBE2A51863F00D374C7 /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7E1DBD2A51863F00D374C7 /* Hud.swift */; };
+		6C7E1DC12A51997400D374C7 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7E1DC02A51997400D374C7 /* ImageSaver.swift */; };
 		6CC76BCC2A4C31DF0089F8CD /* SearchTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC76BCB2A4C31DE0089F8CD /* SearchTagsView.swift */; };
 		6CC76BCE2A4DA3760089F8CD /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC76BCD2A4DA3760089F8CD /* FavoriteView.swift */; };
 		6CC76BD02A4DA3A30089F8CD /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC76BCF2A4DA3A30089F8CD /* FavoriteViewModel.swift */; };
@@ -92,6 +94,8 @@
 		6C4F32F72A2BCF04006C3F08 /* SearchKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKey.swift; sourceTree = "<group>"; };
 		6C77B0122A46E19B0070067F /* shuoren.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = shuoren.xcdatamodel; sourceTree = "<group>"; };
 		6C77B0342A487EA10070067F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		6C7E1DBD2A51863F00D374C7 /* Hud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
+		6C7E1DC02A51997400D374C7 /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 		6CC76BCB2A4C31DE0089F8CD /* SearchTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagsView.swift; sourceTree = "<group>"; };
 		6CC76BCD2A4DA3760089F8CD /* FavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		6CC76BCF2A4DA3A30089F8CD /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
@@ -171,6 +175,7 @@
 		6C0EC6F42A249D2D000BFAF6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				6C7E1DBF2A51994400D374C7 /* Function */,
 				6C0EC7082A249D2E000BFAF6 /* NetWorking */,
 				6C0EC6F52A249D2D000BFAF6 /* UI */,
 				6C0EC6FA2A249D2D000BFAF6 /* Log */,
@@ -186,6 +191,7 @@
 				6C0EC6F72A249D2D000BFAF6 /* ZoomImageView.swift */,
 				6C0EC6F82A249D2D000BFAF6 /* AsyncContentView.swift */,
 				6C0EC6F92A249D2D000BFAF6 /* ErrorView.swift */,
+				6C7E1DBD2A51863F00D374C7 /* Hud.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -271,6 +277,14 @@
 				6C77B0342A487EA10070067F /* CoreDataManager.swift */,
 			);
 			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		6C7E1DBF2A51994400D374C7 /* Function */ = {
+			isa = PBXGroup;
+			children = (
+				6C7E1DC02A51997400D374C7 /* ImageSaver.swift */,
+			);
+			path = Function;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -361,7 +375,9 @@
 				6C0EC7182A249D2E000BFAF6 /* ZoomImageView.swift in Sources */,
 				6C0EC7472A273CAC000BFAF6 /* SearchModel.swift in Sources */,
 				6C0EC71B2A249D2E000BFAF6 /* Log.swift in Sources */,
+				6C7E1DBE2A51863F00D374C7 /* Hud.swift in Sources */,
 				6C0EC7192A249D2E000BFAF6 /* AsyncContentView.swift in Sources */,
+				6C7E1DC12A51997400D374C7 /* ImageSaver.swift in Sources */,
 				6C0EC71C2A249D2E000BFAF6 /* View.swift in Sources */,
 				6C0EC72A2A249D2E000BFAF6 /* AlbumDetailViewModel.swift in Sources */,
 				6C0EC7262A249D2E000BFAF6 /* NetworkReachabilityHelper.swift in Sources */,

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ZoomImageView: View {
-    
-    var image: Image
+    @State private var showingSaveHUD = false
+    var uiImage: UIImage
 
     @State private var scale: CGFloat = 1
     @State private var lastScale: CGFloat = 1
@@ -19,15 +19,15 @@ struct ZoomImageView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    public init(image: Image) {
-        self.image = image
+    public init(uiImage: UIImage) {
+        self.uiImage = uiImage
     }
 
     public var body: some View {
         GeometryReader { proxy in
             ZStack {
                 Color.gray
-                image
+                Image(uiImage: uiImage)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .scaleEffect(scale)
@@ -37,7 +37,26 @@ struct ZoomImageView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .overlay(alignment: .topTrailing) {
-                close
+                closeButton
+            }
+            .overlay(alignment: .bottomTrailing) {
+                saveButton
+            }
+            .overlay {
+                if showingSaveHUD {
+                    Hud {
+                        Label("保存图片", systemImage: "photo")
+                    }
+                    .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
+                    .zIndex(1)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            withAnimation {
+                                showingSaveHUD = false
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -105,7 +124,7 @@ struct ZoomImageView: View {
 
 private extension ZoomImageView {
     
-    var close: some View {
+    var closeButton: some View {
         Button {
             dismiss()
         } label: {
@@ -116,6 +135,27 @@ private extension ZoomImageView {
         }
         .padding(.top, UIDevice.hasHotch ? 50 : 16)
         .padding(.trailing)
+    }
+    
+    var saveButton: some View {
+        Button {
+            let imageSaver = ImageSaver()
+            imageSaver.successHandler = {
+                withAnimation {
+                    self.showingSaveHUD = true
+                }
+            }
+            imageSaver.errorHandler = {
+                print("Oops: \($0.localizedDescription)")
+            }
+            imageSaver.writeToPhotoAlbum(image: self.uiImage)
+        } label: {
+            Image(systemName: "square.and.arrow.down")
+                .font(.largeTitle)
+                .foregroundColor(.white)
+        }
+        .padding(.trailing)
+        .padding(.bottom)
     }
 }
 

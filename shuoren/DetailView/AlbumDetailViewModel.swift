@@ -11,7 +11,7 @@ import Kingfisher
 class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, LoadableObject {
     @Published private(set) var state: LoadingState<AlbumDetail> = .idle
     @Published var item: HomeItem
-    @Published var tappedImage: Image?
+    @Published var tappedImage: UIImage?
     @Published var shareImages: [UIImage] = []
     var tapUrlString: String?
     var receivedData: Data = Data()
@@ -113,7 +113,7 @@ class AlbumDetailViewModel: NSObject, ObservableObject, URLSessionDataDelegate, 
     func getTappedImageWithURLString(url: String?) {
         getImageWithURLString(url: url) { image in
             if let image = image {
-                self.tappedImage = Image(kfImage:image)
+                self.tappedImage = image
             }
         }
     }

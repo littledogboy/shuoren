@@ -96,7 +96,7 @@ struct AlbumDetailView: View {
                 .scaleEffect(scale)
                 .gesture(makeMagnificationGesture(size: geometryreader.size))
                 .fullScreenCover(isPresented: $isImagePresented) {
-                    ZoomImageView(image: self.vm.tappedImage!)
+                    ZoomImageView(uiImage: self.vm.tappedImage!)
                 }
             }
             .listStyle(.plain)
