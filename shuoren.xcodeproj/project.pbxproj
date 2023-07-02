@@ -49,6 +49,8 @@
 		6C77B0352A487EA10070067F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C77B0342A487EA10070067F /* CoreDataManager.swift */; };
 		6C7E1DBE2A51863F00D374C7 /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7E1DBD2A51863F00D374C7 /* Hud.swift */; };
 		6C7E1DC12A51997400D374C7 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7E1DC02A51997400D374C7 /* ImageSaver.swift */; };
+		6C7E1DC32A51AF8A00D374C7 /* LongPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7E1DC22A51AF8A00D374C7 /* LongPictureView.swift */; };
+		6C7E1DC52A51D24600D374C7 /* ImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7E1DC42A51D24600D374C7 /* ImageRenderer.swift */; };
 		6CC76BCC2A4C31DF0089F8CD /* SearchTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC76BCB2A4C31DE0089F8CD /* SearchTagsView.swift */; };
 		6CC76BCE2A4DA3760089F8CD /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC76BCD2A4DA3760089F8CD /* FavoriteView.swift */; };
 		6CC76BD02A4DA3A30089F8CD /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC76BCF2A4DA3A30089F8CD /* FavoriteViewModel.swift */; };
@@ -96,6 +98,8 @@
 		6C77B0342A487EA10070067F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		6C7E1DBD2A51863F00D374C7 /* Hud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
 		6C7E1DC02A51997400D374C7 /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
+		6C7E1DC22A51AF8A00D374C7 /* LongPictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongPictureView.swift; sourceTree = "<group>"; };
+		6C7E1DC42A51D24600D374C7 /* ImageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRenderer.swift; sourceTree = "<group>"; };
 		6CC76BCB2A4C31DE0089F8CD /* SearchTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagsView.swift; sourceTree = "<group>"; };
 		6CC76BCD2A4DA3760089F8CD /* FavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		6CC76BCF2A4DA3A30089F8CD /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
@@ -192,6 +196,7 @@
 				6C0EC6F82A249D2D000BFAF6 /* AsyncContentView.swift */,
 				6C0EC6F92A249D2D000BFAF6 /* ErrorView.swift */,
 				6C7E1DBD2A51863F00D374C7 /* Hud.swift */,
+				6C7E1DC42A51D24600D374C7 /* ImageRenderer.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -244,6 +249,7 @@
 				6C0EC70C2A249D2E000BFAF6 /* AlbumDetailView.swift */,
 				6C0EC70D2A249D2E000BFAF6 /* AlbumDetail.swift */,
 				6C0EC70E2A249D2E000BFAF6 /* AlbumDetailViewModel.swift */,
+				6C7E1DC22A51AF8A00D374C7 /* LongPictureView.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -393,6 +399,7 @@
 				6C0EC7272A249D2E000BFAF6 /* Api.swift in Sources */,
 				6C4F32F82A2BCF04006C3F08 /* SearchKey.swift in Sources */,
 				6C0EC7222A249D2E000BFAF6 /* GroupModel.swift in Sources */,
+				6C7E1DC32A51AF8A00D374C7 /* LongPictureView.swift in Sources */,
 				6C0EC71E2A249D2E000BFAF6 /* Color.swift in Sources */,
 				6CC76BD02A4DA3A30089F8CD /* FavoriteViewModel.swift in Sources */,
 				6CC76BCC2A4C31DF0089F8CD /* SearchTagsView.swift in Sources */,
@@ -403,6 +410,7 @@
 				6C0EC7172A249D2E000BFAF6 /* Adaptation.swift in Sources */,
 				6C0EC6E42A249C76000BFAF6 /* shuorenApp.swift in Sources */,
 				6C0EC71A2A249D2E000BFAF6 /* ErrorView.swift in Sources */,
+				6C7E1DC52A51D24600D374C7 /* ImageRenderer.swift in Sources */,
 				6C0EC7292A249D2E000BFAF6 /* AlbumDetail.swift in Sources */,
 				6C0EC72D2A249D2E000BFAF6 /* HomeViewModel.swift in Sources */,
 				6C0EC71D2A249D2E000BFAF6 /* String.swift in Sources */,

@@ -146,7 +146,7 @@ private extension ZoomImageView {
                 }
             }
             imageSaver.errorHandler = {
-                print("Oops: \($0.localizedDescription)")
+                debugLog(object: "Oops: \($0.localizedDescription)")
             }
             imageSaver.writeToPhotoAlbum(image: self.uiImage)
         } label: {

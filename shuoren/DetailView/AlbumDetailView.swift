@@ -68,29 +68,8 @@ struct AlbumDetailView: View {
                     }
                     
                     if !albumDetail.images!.isEmpty && image == albumDetail.images!.last {
-                        Button {
-                            vm.getShareImages()
-                            if !vm.shareImages.isEmpty {
-                                shareSheet = true
-                            }
-                        } label: {
-                            Label(title: {
-                                Text("分享")
-                                .foregroundColor(.blue)
-                                .font(.system(size:24))
-                                }, icon: {
-                                    Image(systemName: "link")
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .foregroundColor(.blue)
-                                    .aspectRatio(contentMode: .fit)
-                                })
-                                .padding(.horizontal)
-                                .padding(.vertical)
-                                .background(Color(.tertiarySystemFill))
-                                .cornerRadius(5)
-                        }
-                        .listRowSeparatorTint(.white)
+                        shareButton
+                        longPictureButton(items: albumDetail.images!)
                     }
                 }
                 .scaleEffect(scale)
@@ -131,6 +110,54 @@ struct AlbumDetailView: View {
         }
         .onAppear {
             vm.checkItem()
+        }
+    }
+    
+    var shareButton: some View {
+        Button {
+            vm.getShareImages()
+            if !vm.shareImages.isEmpty {
+                shareSheet = true
+            }
+        } label: {
+            Label(title: {
+                Text("分享")
+                .foregroundColor(.blue)
+                .font(.system(size:24))
+                }, icon: {
+                    Image(systemName: "link")
+                    .resizable()
+                    .renderingMode(.template)
+                    .foregroundColor(.blue)
+                    .aspectRatio(contentMode: .fit)
+                })
+                .padding(.horizontal)
+                .padding(.vertical)
+                .background(Color(.tertiarySystemFill))
+                .cornerRadius(5)
+        }
+        .listRowSeparatorTint(.white)
+    }
+    
+    func longPictureButton(items: [ImageModel]) -> some View {
+        NavigationLink {
+            LongPictureView(imageItems: items)
+        } label: {
+            Label(title: {
+                Text("分享长图")
+                .foregroundColor(.blue)
+                .font(.system(size:24))
+                }, icon: {
+                    Image(systemName: "link")
+                    .resizable()
+                    .renderingMode(.template)
+                    .foregroundColor(.blue)
+                    .aspectRatio(contentMode: .fit)
+                })
+                .padding(.horizontal)
+                .padding(.vertical)
+                .background(Color(.tertiarySystemFill))
+                .cornerRadius(5)
         }
     }
     
