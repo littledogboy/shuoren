@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Kingfisher
+import Photos
 
 struct LongPictureView: View {
     @State var snapshot: UIImage?
@@ -63,8 +64,6 @@ struct LongPictureView: View {
                                         let top = proxy.safeAreaInsets.top
                                         let newSize = CGSize(width: proxy.size.width, height: proxy.size.height + top)
                                         self.scrollViewContentSize = newSize
-                                        debugLog(object: proxy.size)
-                                        debugLog(object: top)
                                     }
                                 }
                             )
@@ -115,22 +114,70 @@ struct LongPictureView: View {
             }
         }
         imageSaver.errorHandler = {
-            debugLog(object: "存储长图失败:\($0.localizedDescription)")
+            debugLog(object: "存储长图失败:\($0)")
         }
         Task {
             if let image = await generateSnapshot(size: size) {
+                
+                // Save 48MP ProRaw to PhotoLibrary may fail
+                // https://developer.apple.com/forums/thread/716143
+                // PHPhotosErrorDomain error 3303
+                // https://www.youtube.com/watch?v=T6P-u0R5as8
+                var resizedImage: UIImage?
+                let doubleFileSize = Double(image.getSizeIn(.megabyte))!
+                let imageFileMaxSize = 40.0 // MB
+                debugLog(object: "原始图片大小 %f: \(doubleFileSize) MB")
+                
+                if doubleFileSize > imageFileMaxSize {
+                    let percent: Double = imageFileMaxSize / doubleFileSize
+                    let truePercent = sqrt(percent)
+                    let ceilTruePercent = Double(Int(truePercent * 100)) / 100.0
+                    debugLog(object: "ceilPercent : \(ceilTruePercent) ")
+                    if let resultImage = image.resized(withPercentage: ceilTruePercent) {
+                        debugLog(object: "调整后的图片大小 %f: \(Double(resultImage.getSizeIn(.megabyte))!) MB")
+                        resizedImage = resultImage
+                    }
+                }
+                
                 self.isGeneratingImage = false
-                imageSaver.writeToPhotoAlbum(image: image)
+                imageSaver.writeToPhotoAlbum(image: resizedImage ?? image)
             }
         }
     }
     
     func generateSnapshot(size: CGSize) async -> UIImage? {
         let extraHeight: CGFloat = 32 + 44 + 20
-        let renderer = await ImageRenderer(content: scrollView, size: CGSize(width: size.width, height: size.height + extraHeight))
+        let height: CGFloat = extraHeight + size.height
+        let renderer = await ImageRenderer(content: scrollView, size: CGSize(width: size.width, height: height))
         return await renderer.uiImage
     }
+    
+    /*
+    func saveResizedImageToPhotoLibrary(imageData: Data) {
+        PHPhotoLibrary.shared().performChanges({
+            let creationRequest = PHAssetCreationRequest.forAsset()
+            let options = PHAssetResourceCreationOptions()
+            creationRequest.addResource(with: .photo, data: imageData, options: options)
+        }) { success, error in
+            DispatchQueue.main.async {
+                if success {
+                    print("Image saved successfully")
+                    // Show a success message or perform any additional actions
+                } else {
+                    if let error = error {
+                        print("Error saving image: \(error.localizedDescription)")
+                        // Show an error message or handle the error appropriately
+                    } else {
+                        print("Unknown error occurred while saving image")
+                        // Show an error message or handle the error appropriately
+                    }
+                }
+            }
+        }
+    }
+    */
 }
+
 
 
 struct LongPictureView_Previews: PreviewProvider {
