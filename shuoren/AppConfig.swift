@@ -13,6 +13,6 @@ public class AppConfig {
     var serverDomain: String
     
     init() {
-        serverDomain = "http://192.168.0.10:8080"
+        serverDomain = "http://localhost:8080"
     }
 }
