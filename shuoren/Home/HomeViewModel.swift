@@ -26,6 +26,7 @@ class HomeViewModel:LoadableObject, ObservableObject {
 
     func load() {
         self.state = .loading
+        updateDesURL()
         
         Task {
             var isServerON = false
@@ -38,10 +39,10 @@ class HomeViewModel:LoadableObject, ObservableObject {
                     isServerON = true
                 }
             } catch {
-                debugLog(object: "网络请求出错: \(error.localizedDescription)")
+                debugLog(object: "检查服务器出错: \(error.localizedDescription)")
             }
             
-            debugLog(object: "检查服务器检查完毕")
+            debugLog(object: "检查服务器健康检查完毕")
             debugLog(object: "服务器是否在线：\(isServerON), 进行下一步请求")
 
             let url = URL(string: desURL)
@@ -133,6 +134,16 @@ class HomeViewModel:LoadableObject, ObservableObject {
         } catch {
             DispatchQueue.main.async {
                 self.state = .failed(error)
+            }
+        }
+    }
+    
+    func updateDesURL() {
+        if !desURL.contains(kServerDomain) {
+            if let oldHost = URL(string: desURL)?.host {
+                if let newHost = URL(string: kServerDomain)?.host {
+                    desURL = desURL.replacingOccurrences(of: oldHost, with: newHost)
+                }
             }
         }
     }

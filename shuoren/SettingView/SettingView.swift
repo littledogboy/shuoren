@@ -9,7 +9,9 @@ import SwiftUI
 
 struct SettingView: View {
     @StateObject private var vm: SettingViewModel = SettingViewModel()
-    
+    @State private var serverDomainText: String = ""
+    @State private var serverDomainTextOnEditing = false
+
     var body: some View {
         NavigationView {
             List {
@@ -37,6 +39,24 @@ struct SettingView: View {
                 } header: {
                     Text("缓存")
                 }
+                
+                Section {
+                    TextField("请输入后端ip地址", text: $serverDomainText, onEditingChanged: { editingChanged in
+                        serverDomainTextOnEditing = editingChanged
+                    })
+                        .disableAutocorrection(true)
+                        .onSubmit {
+                            if !serverDomainText.isEmpty {
+                                AppConfig.shared.serverDomain = "http://" + serverDomainText + ":8080"
+                                debugLog(object: AppConfig.shared.serverDomain)
+                            }
+                        }
+                    Text("后端地址：\(serverDomainTextOnEditing ? AppConfig.shared.serverDomain : AppConfig.shared.serverDomain)")
+                        .foregroundColor(.primary)
+                } header: {
+                    Text("其它")
+                }
+
             }
             .navigationTitle(Text("设置"))
             .navigationBarTitleDisplayMode(.inline)

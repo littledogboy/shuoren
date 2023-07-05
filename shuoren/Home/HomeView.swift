@@ -17,6 +17,7 @@ import SwiftUIPullToRefresh
 struct HomeView: View {
     @StateObject private var vm: HomeViewModel = HomeViewModel(desURL: kHome)
     var menuItem : HomeItem?
+    
     var tag: SearchTag?
     var searchKey : SearchKey?
     

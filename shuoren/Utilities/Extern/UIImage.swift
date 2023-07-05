@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import UIKit
+import AVFoundation
 
 extension UIImage {
     
@@ -59,4 +60,38 @@ extension UIImage {
 
         return String(format: "%.2f", size)
     }
+}
+
+extension UIImage {
+  enum HEICError: Error {
+    case heicNotSupported
+    case cgImageMissing
+    case couldNotFinalize
+  }
+  
+  func heicData(compressionQuality: CGFloat) throws -> Data {
+    let data = NSMutableData()
+    guard let imageDestination =
+      CGImageDestinationCreateWithData(
+        data, AVFileType.heic as CFString, 1, nil
+      )
+      else {
+        throw HEICError.heicNotSupported
+    }
+    
+    guard let cgImage = self.cgImage else {
+      throw HEICError.cgImageMissing
+    }
+    
+    let options: NSDictionary = [
+      kCGImageDestinationLossyCompressionQuality: compressionQuality
+    ]
+    
+    CGImageDestinationAddImage(imageDestination, cgImage, options)
+    guard CGImageDestinationFinalize(imageDestination) else {
+      throw HEICError.couldNotFinalize
+    }
+    
+    return data as Data
+  }
 }

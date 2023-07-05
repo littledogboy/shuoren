@@ -15,6 +15,8 @@ struct LongPictureView: View {
     @State private var showingSaveHUD = false
     @State private var isGeneratingImage = false
     @State var scrollViewContentSize: CGSize?
+    
+//    private let compressionQueue = OperationQueue()
 
     var imageItems: [ImageModel]
     
@@ -118,6 +120,30 @@ struct LongPictureView: View {
         }
         Task {
             if let image = await generateSnapshot(size: size) {
+                
+                /*
+                let doubleFileSize = Double(image.getSizeIn(.megabyte))!
+                let imageFileMaxSize = 40.0 // MB
+                debugLog(object: "原始图片大小 %f: \(doubleFileSize) MB")
+                
+                compressionQueue.addOperation {
+                  do {
+                      let percent: Double = imageFileMaxSize / doubleFileSize
+                      let ceilTruePercent = Double(Int(percent * 100)) / 100.0
+                      let data = try image.heicData(compressionQuality: ceilTruePercent)
+                      debugLog(object: ceilTruePercent)
+                      debugLog(object: data.prettySize)
+                      let heicImage = UIImage(data: data)
+                      DispatchQueue.main.async {
+                          self.isGeneratingImage = false
+                          imageSaver.writeToPhotoAlbum(image: heicImage ?? image)
+                      }
+                  } catch {
+                    print("Error creating HEIC data: \(error.localizedDescription)")
+                  }
+                }
+                 */
+                
                 
                 // Save 48MP ProRaw to PhotoLibrary may fail
                 // https://developer.apple.com/forums/thread/716143
