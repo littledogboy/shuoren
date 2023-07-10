@@ -9,8 +9,26 @@
 import Foundation
 import Kingfisher
 
+enum ImageCacheState {
+    case idle
+    case loading
+    case done
+}
+
 class SettingViewModel: ObservableObject {
     @Published var imageCache: String = ""
+    @Published var imageCacheState: ImageCacheState = .idle
+    
+    func cleanImageCache() {
+        // Remove all
+        imageCacheState = .loading
+        let cache = ImageCache.default
+//        cache.clearMemoryCache()
+        cache.clearDiskCache { [self] in
+            imageCacheState = .done
+            getImageCache()
+        }
+    }
     
     func getImageCache() {
         ImageCache.default.calculateDiskStorageSize { result in

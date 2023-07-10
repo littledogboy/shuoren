@@ -31,11 +31,16 @@ struct SettingView: View {
                     HStack{
                         Text("图片缓存")
                         Spacer()
-                        Text(vm.imageCache)
-                            .onAppear {
-                                vm.getImageCache()
-                            }
+                        if vm.imageCacheState == .loading {
+                            ProgressView()
+                        } else {
+                            Text(vm.imageCache)
+                        }
                     }
+                    .onAppear {
+                        vm.getImageCache()
+                    }
+                    .onTapGesture(perform: vm.cleanImageCache)
                 } header: {
                     Text("缓存")
                 }
