@@ -8,11 +8,22 @@
 
 import Foundation
 
+let defaultServerDomainKey = "kServerDomain"
+let defaultServerDomain = "http://localhost:8080"
+
 public class AppConfig {
     static let shared = AppConfig()
-    var serverDomain: String
+    var serverDomain: String {
+        didSet {
+            UserDefaults.standard.set(serverDomain, forKey: defaultServerDomainKey)
+        }
+    }
     
     init() {
-        serverDomain = "http://localhost:8080"
+        if let defaultServerDomain = UserDefaults.standard.value(forKey: defaultServerDomainKey) {
+            serverDomain = defaultServerDomain as! String
+        } else {
+            serverDomain = defaultServerDomain
+        }
     }
 }
